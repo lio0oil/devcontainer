@@ -1,0 +1,15 @@
+# homebrew
+brew "gcc"
+
+# shell
+brew "zsh"
+
+# zsh plugin
+brew "zsh-completions"
+
+# pyton
+brew "pyenv"
+
+#git
+brew "git"
+brew "git-remote-codecommit"
