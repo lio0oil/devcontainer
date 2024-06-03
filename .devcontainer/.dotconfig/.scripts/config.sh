@@ -3,7 +3,7 @@
 cd `dirname $0`
 cd ..
 
-cp -r .files/zsh ~/.dotconfig
+cp -r .files/zsh/. ~/.dotconfig
 
 for filepath in ~/.dotconfig/.??*
 do
