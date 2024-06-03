@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd ~
-if [ ! -d ".zsh_plugins/zaw" ]; then
+if [ -d "zsh_plugins/zaw" ]; then
     exit 
 fi
 if [ ! -d zsh_plugins ]; then
