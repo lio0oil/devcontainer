@@ -240,7 +240,7 @@
   "system": {
     "linux": {
       "Debian GNU/Linux 11 (bullseye) (bullseye)": {
-        "HOMEBREW_VERSION": "4.3.2",
+        "HOMEBREW_VERSION": "4.3.3",
         "HOMEBREW_PREFIX": "/home/linuxbrew/.linuxbrew",
         "Homebrew/homebrew-core": "api",
         "GCC": "10.2.1"
