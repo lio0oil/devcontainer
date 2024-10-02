@@ -19,3 +19,6 @@ brew "jq"
 #git
 brew "git"
 brew "git-remote-codecommit"
+
+# Node.js
+# brew "volta"

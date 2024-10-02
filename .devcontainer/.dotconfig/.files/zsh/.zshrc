@@ -104,24 +104,26 @@ source $ZSH/oh-my-zsh.sh
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 DISABLE_AUTO_UPDATE=true
 DISABLE_UPDATE_PROMPT=true
-
-# zaw
-source /home/vscode/zsh_plugins/zaw/zaw.zsh
-bindkey '^r' zaw-history
-
 # zsh-completions
 if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
     autoload -Uz compinit
     compinit
 fi
-
 # zsh-autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 # zsh-syntax-highlighting
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+# zaw
+source /home/vscode/zsh_plugins/zaw/zaw.zsh
+bindkey '^r' zaw-history
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+# volta
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"

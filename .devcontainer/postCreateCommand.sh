@@ -6,11 +6,13 @@ cd $CURRENT
 sh ./.dotconfig/.scripts/homebrew.sh
 sh ./.dotconfig/.scripts/zsh_plugin.sh
 sh ./.dotconfig/.scripts/zaw.sh
-sh ./.dotconfig/.scripts/pyenv.sh
-sh ./.dotconfig/.scripts/aws.sh
-#sh ./.dotconfig/.scripts/config.sh
-#sh ./.files/nodejs.sh
-#sh ./.files/zsh.sh
-#pip3 install -r requirements.txt
 
-source ~/.zshrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+zsh ./.dotconfig/.scripts/pyenv.sh
+#zsh ./.dotconfig/nodejs.sh
+zsh ./.dotconfig/.scripts/volta.sh
+zsh ./.dotconfig/.scripts/aws_cli.sh
+zsh ./.dotconfig/.scripts/aws_cdk.sh
+#zsh ./.dotconfig/.scripts/copy_profile.sh
+
