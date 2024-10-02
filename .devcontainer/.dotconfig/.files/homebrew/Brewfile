@@ -15,6 +15,7 @@ brew "jq"
 # pyton
 # pyenv install command error
 # brew "pyenv"
+# brew "poetry"
 
 #git
 brew "git"
