@@ -9,6 +9,13 @@ if test ! $(which brew); then
 
     (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/$(id -u -n)/.bashrc
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+    cat << "EOF" >> ~/.zshrc
+# HomeBrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+DISABLE_AUTO_UPDATE=true
+DISABLE_UPDATE_PROMPT=true
+EOF
 else
     echo "HomeBrew is already installed."
 fi

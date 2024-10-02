@@ -1,7 +1,7 @@
 {
     "files.eol": "\n",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
           "source.fixAll": "explicit"
@@ -14,7 +14,6 @@
         "source.fixAll": "explicit"
       }
     },
-    "black-formatter.args":["--line-length=128"],
     "ruff.lint.args": ["--line-length=128"],
     "python.languageServer": "Pylance",
     "prettier.embeddedLanguageFormatting": "off",

@@ -6,9 +6,15 @@ brew "zsh"
 
 # zsh plugin
 brew "zsh-completions"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+#util
+brew "jq"
 
 # pyton
-brew "pyenv"
+# pyenv install command error
+# brew "pyenv"
 
 #git
 brew "git"
