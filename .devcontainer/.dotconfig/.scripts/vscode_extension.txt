@@ -1,5 +1,4 @@
 Boto3typed.boto3-ide
-ms-python.black-formatter
 MS-CEINTL.vscode-language-pack-ja
 esbenp.prettier-vscode
 ms-python.vscode-pylance
