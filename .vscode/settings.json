@@ -28,5 +28,6 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.defaultInterpreterPath": ""
+    "python.defaultInterpreterPath": "",
+    "terminal.integrated.enableVisualBell": true
 }

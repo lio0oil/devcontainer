@@ -13,7 +13,7 @@ brew "zsh-syntax-highlighting"
 brew "jq"
 
 # pyton
-# pyenv install command error
+# change official script
 # brew "pyenv"
 # brew "poetry"
 
@@ -22,4 +22,5 @@ brew "git"
 brew "git-remote-codecommit"
 
 # Node.js
+# change official script
 # brew "volta"

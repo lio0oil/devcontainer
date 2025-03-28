@@ -9,13 +9,15 @@ sh ./.dotconfig/.scripts/zaw.sh
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-zsh ./.dotconfig/.scripts/pyenv.sh
-zsh ./.dotconfig/.scripts/poetry.sh
+# change uv
+#zsh ./.dotconfig/.scripts/pyenv.sh
+#zsh ./.dotconfig/.scripts/poetry.sh
+zsh ./.dotconfig/.scripts/uv.sh
 zsh ./.dotconfig/.scripts/volta.sh
 zsh ./.dotconfig/.scripts/aws_cli.sh
 zsh ./.dotconfig/.scripts/aws_cdk.sh
 
-zsh ./.dotconfig/.scripts/vscode_extension.sh
+#zsh ./.dotconfig/.scripts/vscode_extension.sh
 
 # setting by scripts 
 #zsh ./.dotconfig/.scripts/copy_profile.sh
