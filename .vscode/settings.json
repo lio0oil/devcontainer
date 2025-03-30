@@ -29,5 +29,6 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.defaultInterpreterPath": "",
-    "terminal.integrated.enableVisualBell": true
+    "terminal.integrated.enableVisualBell": true,
+    "editor.tabSize":4
 }
