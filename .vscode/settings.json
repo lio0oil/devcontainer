@@ -14,7 +14,7 @@
         "source.fixAll": "explicit"
       }
     },
-    "ruff.lint.args": ["--line-length=128"],
+    "ruff.lineLength":128,
     "python.languageServer": "Pylance",
     "prettier.embeddedLanguageFormatting": "off",
     "terminal.integrated.defaultProfile.linux": "zsh",
