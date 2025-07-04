@@ -18,6 +18,7 @@ zsh ./.dotconfig/.scripts/volta.sh
 zsh ./.dotconfig/.scripts/aws_cli.sh
 zsh ./.dotconfig/.scripts/aws_cdk.sh
 zsh ./.dotconfig/.scripts/java_sdkman.sh
+zsh ./.dotconfig/.scripts/docker.sh
 
 # code command connot be foundm so i will install it mamually.
 # zsh ./.dotconfig/.scripts/vscode_extension.sh

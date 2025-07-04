@@ -24,3 +24,5 @@ brew "git-remote-codecommit"
 # Node.js
 # change official script
 # brew "volta"
+
+brew "docker"

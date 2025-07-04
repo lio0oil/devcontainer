@@ -35,6 +35,7 @@
 	"workspaceFolder": "/home/vscode/workspace",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind,consistency=cached",
 	"mounts": [
-		 "source=${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached"
+		 "source=${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+		 "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
 	]
 }
