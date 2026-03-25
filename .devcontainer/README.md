@@ -51,6 +51,14 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 | Go | goenv | 最新安定版（デフォルト無効） |
 | Rust | rustup | stable（デフォルト無効） |
 
+### AI CLI ツール
+
+| ツール | インストール方法 | デフォルト |
+|---|---|---|
+| Claude Code | curl インストーラー | 有効 |
+| Gemini CLI | npm | 有効 |
+| Kiro CLI | curl インストーラー | 有効 |
+
 ### VS Code 拡張機能
 
 | 拡張機能 | 用途 |
@@ -130,6 +138,17 @@ INSTALL_GO_VERSION=""       # 空で最新安定版 / 例: "1.24.0"
 # Rust
 INSTALL_RUST=false
 INSTALL_RUST_VERSION=""     # 空で stable / 例: "1.85.0"
+```
+
+### AI CLI ツールの有効・無効
+
+`.devcontainer/.dotconfig/.scripts/config.sh` で設定する。
+
+```sh
+# AI CLI
+INSTALL_CLAUDE_CODE=true
+INSTALL_GEMINI_CLI=true
+INSTALL_KIRO_CLI=true
 ```
 
 ### DB などのサービス追加
