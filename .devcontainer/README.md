@@ -7,14 +7,14 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### ベースイメージ
 
 | 項目 | 内容 |
-|---|---|
+| --- | --- |
 | イメージ | `mcr.microsoft.com/devcontainers/base:ubuntu` |
 | ユーザー | `vscode` |
 
 ### シェル
 
 | 項目 | 内容 |
-|---|---|
+| --- | --- |
 | シェル | zsh |
 | フレームワーク | Oh My Zsh |
 | テーマ | devcontainers |
@@ -23,7 +23,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### パッケージマネージャー
 
 | ツール | 用途 |
-|---|---|
+| --- | --- |
 | Homebrew | Linux 向けパッケージマネージャー。各種ツールのインストールに使用 |
 | uv | Python バージョン・パッケージ管理 |
 | Volta | Node.js バージョン管理 |
@@ -32,7 +32,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### インストールされるツール（Homebrew）
 
 | ツール | 用途 |
-|---|---|
+| --- | --- |
 | gcc | C/C++ コンパイラ |
 | jq | JSON 処理 |
 | git | バージョン管理 |
@@ -44,7 +44,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### 言語ランタイム
 
 | 言語 | バージョン管理 | デフォルト |
-|---|---|---|
+| --- | --- | --- |
 | Python | uv | 最新安定版 |
 | Node.js | Volta | 最新安定版 |
 | Java | SDKMAN | 最新 LTS |
@@ -54,7 +54,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### AI CLI ツール
 
 | ツール | インストール方法 | デフォルト |
-|---|---|---|
+| --- | --- | --- |
 | Claude Code | curl インストーラー | 有効 |
 | Gemini CLI | npm | 有効 |
 | Kiro CLI | curl インストーラー | 有効 |
@@ -62,7 +62,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### VS Code 拡張機能
 
 | 拡張機能 | 用途 |
-|---|---|
+| --- | --- |
 | MS-CEINTL.vscode-language-pack-ja | 日本語 UI |
 | esbenp.prettier-vscode | コードフォーマッター |
 | ms-python.vscode-pylance | Python 言語サーバー |
@@ -76,7 +76,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 ### マウント
 
 | ホスト | コンテナ | 用途 |
-|---|---|---|
+| --- | --- | --- |
 | リポジトリルート | `/home/vscode/workspace` | ワークスペース |
 | `~/.aws` | `/home/vscode/.aws` | AWS 認証情報 |
 | `/var/run/docker.sock` | `/var/run/docker.sock` | Docker ソケット（Docker in Docker） |
