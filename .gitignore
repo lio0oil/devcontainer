@@ -2,7 +2,3 @@ docker-compose.override.yml
 Brewfile.lock.json
 .env
 .claude
-
-# AI CLI が生成する MCP 設定へのシンボリックリンク
-.mcp.json
-.kiro/
