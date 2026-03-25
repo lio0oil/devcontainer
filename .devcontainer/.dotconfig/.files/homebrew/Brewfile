@@ -8,21 +8,24 @@ brew "zsh"
 brew "zsh-completions"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+brew "fzf"
 
-#util
+# util
 brew "jq"
 
-# pyton
-# change official script
-# brew "pyenv"
-# brew "poetry"
-
-#git
+# git
 brew "git"
 brew "git-remote-codecommit"
 
-# Node.js
-# change official script
-# brew "volta"
+# python
+brew "uv"
 
+# node.js
+brew "volta"
+
+# aws
+brew "awscli"
+brew "aws-cdk"
+
+# docker
 brew "docker"

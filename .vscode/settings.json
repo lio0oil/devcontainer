@@ -4,8 +4,9 @@
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit",
           "source.fixAll": "explicit"
-        },
+        }
     },
     "[json]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -14,21 +15,8 @@
         "source.fixAll": "explicit"
       }
     },
-    "ruff.lineLength":128,
+    "ruff.lineLength": 128,
     "python.languageServer": "Pylance",
-    "prettier.embeddedLanguageFormatting": "off",
     "terminal.integrated.defaultProfile.linux": "zsh",
-    "[json][python]": {
-      "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit"
-      }
-    },
-    "python.testing.pytestArgs": [
-      "tests"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "python.defaultInterpreterPath": "",
-    "terminal.integrated.enableVisualBell": true,
-    "editor.tabSize":4
+    "editor.tabSize": 4
 }

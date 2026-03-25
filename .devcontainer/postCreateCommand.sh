@@ -3,25 +3,36 @@
 CURRENT=$(cd $(dirname $0) && pwd)
 cd $CURRENT
 
+# os update
+sudo apt-get update && sudo apt-get upgrade -y
+
+# zsh
+sh ./.dotconfig/.scripts/zsh.sh
+
+# homebrew & packages (zsh-completions, zsh-autosuggestions, zsh-syntax-highlighting, fzf, uv, volta, awscli, aws-cdk, docker)
 sh ./.dotconfig/.scripts/homebrew.sh
-sh ./.dotconfig/.scripts/zsh_plugin.sh
-sh ./.dotconfig/.scripts/zaw.sh
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# change uv
-# zsh ./.dotconfig/.scripts/pyenv.sh
-# zsh ./.dotconfig/.scripts/poetry.sh
-zsh ./.dotconfig/.scripts/uv.sh
-# zsh ./.dotconfig/.scripts/nodejs.sh
-zsh ./.dotconfig/.scripts/volta.sh
-zsh ./.dotconfig/.scripts/aws_cli.sh
-zsh ./.dotconfig/.scripts/aws_cdk.sh
-zsh ./.dotconfig/.scripts/java_sdkman.sh
-zsh ./.dotconfig/.scripts/docker.sh
+# oh-my-zsh & zsh plugins
+sh ./.dotconfig/.scripts/zsh_plugin.sh
 
-# code command connot be foundm so i will install it mamually.
-# zsh ./.dotconfig/.scripts/vscode_extension.sh
+# zshrc & theme
+sh ./.dotconfig/.scripts/copy_profile.sh
 
-# setting by scripts 
-# zsh ./.dotconfig/.scripts/copy_profile.sh
+# python
+sh ./.dotconfig/.scripts/python.sh
+
+# node.js
+sh ./.dotconfig/.scripts/node.sh
+
+# java
+bash ./.dotconfig/.scripts/java_sdkman.sh
+
+# docker socket
+sh ./.dotconfig/.scripts/docker.sh
+
+# vscode extensions (linux only - devcontainer uses postAttachCommand)
+if [ -z "$REMOTE_CONTAINERS" ] && [ -z "$CODESPACES" ]; then
+    sh ./.dotconfig/.scripts/vscode_extension.sh
+fi

@@ -1,41 +1,25 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "Python",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    // "build": {
-    //     // Path is relative to the devcontainer.json file.
-    //     "dockerfile": "Dockerfile"
-    // },
-	"image": "mcr.microsoft.com/devcontainers/python:3.13-bullseye",
+    "name": "devcontainer",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/home/vscode/workspace",
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {
-	// 	"ghcr.io/devcontainers-contrib/features/aws-cdk:2": {}
-	// },
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+    // Install VS Code extensions on attach
+    "postAttachCommand": "/bin/sh ./.devcontainer/.dotconfig/.scripts/vscode_extension.sh",
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh"
+            }
+        }
+    },
 
-	// Configure tool-specific properties.
-	// "customizations": {
-	// 	"vscode": {
-	// 		"settings": {
-	// 			"editor.tabSize": 4,
-	// 		}
-	// 	}
-	// },
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "vscode",
-	
-	"workspaceFolder": "/home/vscode/workspace",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind,consistency=cached",
-	"mounts": [
-		 "source=${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
-		 "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-	]
+    "remoteUser": "vscode"
 }

@@ -1,0 +1,15 @@
+services:
+  # サービスを追加する例（PostgreSQL）
+  # db:
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: mydb
+  #   ports:
+  #     - "5432:5432"
+
+  # devcontainer から追加サービスへのネットワーク接続設定が必要な場合
+  # devcontainer:
+  #   depends_on:
+  #     - db
