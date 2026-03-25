@@ -48,6 +48,8 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 | Python | uv | 最新安定版 |
 | Node.js | Volta | 最新安定版 |
 | Java | SDKMAN | 最新 LTS |
+| Go | goenv | 最新安定版（デフォルト無効） |
+| Rust | rustup | stable（デフォルト無効） |
 
 ### VS Code 拡張機能
 
@@ -120,6 +122,14 @@ INSTALL_NODE_VERSION=""     # 空で最新安定版 / 例: "22"
 # Java
 INSTALL_JAVA=true
 INSTALL_JAVA_VERSION=""     # 空で最新安定版 / 例: "21"
+
+# Go
+INSTALL_GO=false
+INSTALL_GO_VERSION=""       # 空で最新安定版 / 例: "1.24.0"
+
+# Rust
+INSTALL_RUST=false
+INSTALL_RUST_VERSION=""     # 空で stable / 例: "1.85.0"
 ```
 
 ### DB などのサービス追加

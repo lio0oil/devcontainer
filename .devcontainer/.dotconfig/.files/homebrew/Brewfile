@@ -23,6 +23,12 @@ brew "uv"
 # node.js
 brew "volta"
 
+# go
+brew "goenv"
+
+# rust
+brew "rustup"
+
 # aws
 brew "awscli"
 brew "aws-cdk"

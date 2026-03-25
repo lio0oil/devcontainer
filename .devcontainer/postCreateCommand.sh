@@ -29,6 +29,12 @@ sh ./.dotconfig/.scripts/node.sh
 # java
 bash ./.dotconfig/.scripts/java_sdkman.sh
 
+# go
+sh ./.dotconfig/.scripts/go.sh
+
+# rust
+sh ./.dotconfig/.scripts/rust.sh
+
 # docker socket
 sh ./.dotconfig/.scripts/docker.sh
 
