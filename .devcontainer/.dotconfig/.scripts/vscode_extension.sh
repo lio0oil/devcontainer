@@ -21,6 +21,14 @@ if [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
     done
 fi
 
+MARKER="$HOME/.vscode_extensions_installed"
+if [ -f "$MARKER" ]; then
+    echo "VS Code extensions already installed, skipping."
+    exit 0
+fi
+
 for l in `cat ${CONFIG}`;do
     code --install-extension ${l}
 done
+
+touch "$MARKER"
