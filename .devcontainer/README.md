@@ -81,6 +81,10 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 | `~/.aws` | `/home/vscode/.aws` | AWS 認証情報 |
 | `/var/run/docker.sock` | `/var/run/docker.sock` | Docker ソケット（Docker in Docker） |
 
+#### WSLg 音声を使う場合（オプション）
+
+環境変数 `PULSE_SERVER` を設定することで、コンテナ内から WSLg の音声を利用できる（詳細は[WSLg 音声のセットアップ](#wslg-音声のセットアップwsl--wsl2-のみ)を参照）。
+
 ## 前提条件
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -158,6 +162,32 @@ INSTALL_KIRO_CLI=true
 ```sh
 cp .devcontainer/docker-compose.override.yml.example .devcontainer/docker-compose.override.yml
 ```
+
+### WSLg 音声のセットアップ（WSL / WSL2 のみ）
+
+Docker コンテナは WSLg の PulseAudio ソケットに直接アクセスできないため、Ubuntu WSL 上で PulseAudio を TCP で待ち受けさせ、コンテナから TCP 経由で接続する。
+
+1. Ubuntu WSL 上でセットアップスクリプトを実行する
+
+    ```sh
+    sh .devcontainer/setup-wslg-audio.sh
+    ```
+
+    WSL を再起動しても自動で有効になるよう `~/.bashrc` に設定が追加される。
+
+2. `docker-compose.wslg.yml.example` をコピーする
+
+    ```sh
+    cp .devcontainer/docker-compose.wslg.yml.example .devcontainer/docker-compose.wslg.yml
+    ```
+
+3. `devcontainer.json` の `dockerComposeFile` に追加する
+
+    ```jsonc
+    "dockerComposeFile": ["docker-compose.yml", "docker-compose.wslg.yml"]
+    ```
+
+4. コンテナをリビルドする
 
 ### VS Code 拡張機能の追加・変更
 

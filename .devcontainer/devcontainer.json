@@ -1,25 +1,25 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-    "name": "devcontainer",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "devcontainer",
-    "workspaceFolder": "/home/vscode/workspace",
+  "name": "devcontainer",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "devcontainer",
+  "workspaceFolder": "/home/vscode/workspace",
 
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
 
-    // Install VS Code extensions on attach
-    "postAttachCommand": "/bin/sh ./.devcontainer/.dotconfig/.scripts/vscode_extension.sh",
+  // Install VS Code extensions on attach
+  "postAttachCommand": "/bin/sh ./.devcontainer/.dotconfig/.scripts/vscode_extension.sh",
 
-    // Configure tool-specific properties.
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "zsh"
-            }
-        }
-    },
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
 
-    "remoteUser": "vscode"
+  "remoteUser": "vscode"
 }

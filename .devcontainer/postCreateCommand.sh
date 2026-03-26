@@ -6,6 +6,9 @@ cd $CURRENT
 # os update
 sudo apt-get update && sudo apt-get upgrade -y
 
+# apt packages
+sudo apt-get install -y pulseaudio-utils alsa-utils libasound2-plugins
+
 # zsh
 sh ./.dotconfig/.scripts/zsh.sh
 

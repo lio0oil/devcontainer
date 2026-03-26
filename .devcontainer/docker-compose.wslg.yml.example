@@ -1,0 +1,6 @@
+services:
+  devcontainer:
+    volumes:
+      - ./.files/asound.conf:/home/vscode/.asoundrc:ro
+    environment:
+      PULSE_SERVER: tcp:host.docker.internal:4713
