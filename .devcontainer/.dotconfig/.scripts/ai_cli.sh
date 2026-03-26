@@ -28,11 +28,13 @@ if [ "$INSTALL_GEMINI_CLI" = "true" ]; then
     # ~/.gemini/settings.json に mcpServers をマージ
     mkdir -p "$HOME/.gemini"
     GEMINI_SETTINGS="$HOME/.gemini/settings.json"
+    # Gemini CLI は disabled / autoApprove キーに非対応のため除去し、disabled:true のエントリは除外する
+    GEMINI_MCP=$(jq '{mcpServers: (.mcpServers | to_entries | map(select(.value.disabled != true)) | map(.value |= del(.disabled, .autoApprove)) | from_entries)}' "$MCP_SOURCE")
     if [ -f "$GEMINI_SETTINGS" ]; then
-        jq -s '.[0] * {mcpServers: .[1].mcpServers}' "$GEMINI_SETTINGS" "$MCP_SOURCE" > /tmp/gemini_settings.json
+        jq -s '.[0] * .[1]' "$GEMINI_SETTINGS" <(echo "$GEMINI_MCP") > /tmp/gemini_settings.json
         mv /tmp/gemini_settings.json "$GEMINI_SETTINGS"
     else
-        cp "$MCP_SOURCE" "$GEMINI_SETTINGS"
+        echo "$GEMINI_MCP" > "$GEMINI_SETTINGS"
     fi
 else
     echo "Skip Gemini CLI installation."
