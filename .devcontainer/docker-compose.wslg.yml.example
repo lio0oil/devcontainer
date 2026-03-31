@@ -2,5 +2,6 @@ services:
   devcontainer:
     volumes:
       - ./.files/asound.conf:/home/vscode/.asoundrc:ro
+      - /mnt/wslg/runtime-dir/pulse/native:/tmp/pulse/native
     environment:
-      PULSE_SERVER: tcp:host.docker.internal:4713
+      PULSE_SERVER: unix:/tmp/pulse/native

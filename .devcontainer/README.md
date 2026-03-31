@@ -167,29 +167,21 @@ cp .devcontainer/docker-compose.override.yml.example .devcontainer/docker-compos
 
 #### Dev Container で使う場合
 
-Docker コンテナは WSLg の PulseAudio ソケットに直接アクセスできないため、Ubuntu WSL 上で PulseAudio を TCP で待ち受けさせ、コンテナから TCP 経由で接続する。
+WSL2 ファイルシステム上でプロジェクトを開いている場合、WSLg の PulseAudio ソケットをコンテナに直接マウントできる。TCP 設定は不要。
 
-1. Docker 用の PulseAudio TCP モジュールを Ubuntu WSL 上で有効化する
-
-    ```sh
-    sh .devcontainer/setup-wslg-audio.sh
-    ```
-
-    WSL を再起動しても自動で有効になるよう `~/.bashrc` に設定が追加される。
-
-2. `docker-compose.wslg.yml.example` をコピーする
+1. `docker-compose.wslg.yml.example` をコピーする
 
     ```sh
     cp .devcontainer/docker-compose.wslg.yml.example .devcontainer/docker-compose.wslg.yml
     ```
 
-3. `devcontainer.json` の `dockerComposeFile` に追加する
+2. `devcontainer.json` の `dockerComposeFile` に追加する
 
     ```jsonc
     "dockerComposeFile": ["docker-compose.yml", "docker-compose.wslg.yml"]
     ```
 
-4. コンテナをリビルドする
+3. コンテナをリビルドする
 
 #### WSL2 上で直接使う場合
 
