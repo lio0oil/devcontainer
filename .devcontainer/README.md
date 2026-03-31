@@ -94,6 +94,45 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
   - [WSL 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
   - [Dev Containers 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
+## WSL2 の初期セットアップ（初回のみ）
+
+WSL2 をインストールした直後はデフォルトユーザーが未設定で root として起動する。
+一般ユーザーを作成してデフォルトに設定する。
+
+### 1. 一般ユーザーを作成する
+
+WSL2 のターミナル（root）で実行する。
+
+```sh
+# ユーザーを作成（名前は任意）
+useradd -m -s /bin/bash <ユーザー名>
+passwd <ユーザー名>
+
+# sudo を使えるようにする
+usermod -aG sudo <ユーザー名>
+```
+
+### 2. デフォルトユーザーを設定する
+
+```sh
+cat << 'EOF' > /etc/wsl.conf
+[user]
+default=<ユーザー名>
+EOF
+```
+
+### 3. WSL2 を再起動する
+
+Windows の PowerShell で実行する。
+
+```powershell
+wsl --shutdown
+wsl
+```
+
+再起動後、`whoami` で作成したユーザー名が表示されれば完了。
+以降はプロジェクトを `~/repos/` 以下に配置する（実体: `/home/<ユーザー名>/repos/`）。
+
 ## devcontainer での起動手順
 
 **WSL2 のファイルシステム上にプロジェクトを置いて起動することを推奨する。**
