@@ -87,11 +87,51 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 
 ## 前提条件
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Rancher Desktop](https://rancherdesktop.io/)（または [Docker Desktop](https://www.docker.com/products/docker-desktop/)）
+  - Container Engine: `dockerd (moby)` を選択する
+  - WSL Integration: 使用する WSL2 ディストリビューションを有効にする
 - [VS Code](https://code.visualstudio.com/)
-- [Dev Containers 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+  - [WSL 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
+  - [Dev Containers 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 ## devcontainer での起動手順
+
+**WSL2 のファイルシステム上にプロジェクトを置いて起動することを推奨する。**
+Windows のファイルシステム（`C:\`）上に置くと、コンテナからのファイル I/O が遅くなる。
+WSL2 上に置くことでパフォーマンスが向上し、WSLg の音声ソケットも直接マウントできる。
+
+参考: [Open a WSL 2 folder in a container on Windows](https://code.visualstudio.com/docs/devcontainers/containers#_open-a-wsl-2-folder-in-a-container-on-windows) / [Improve disk performance](https://code.visualstudio.com/remote/advancedcontainers/improve-performance)
+
+### 1. WSL2 にリポジトリを用意する
+
+WSL2 のターミナル（Ubuntu など）を開き、リポジトリを Linux ファイルシステム上に置く。
+
+```sh
+mkdir -p ~/repos
+git clone <リポジトリURL> ~/repos/devcontainer
+# または Windows 側からコピーする場合:
+# cp -r /mnt/c/Users/<ユーザー名>/source/repos/devcontainer ~/repos/devcontainer
+```
+
+AWS 認証情報も WSL2 側にコピーする。
+
+```sh
+mkdir -p ~/.aws
+cp /mnt/c/Users/<ユーザー名>/.aws/credentials ~/.aws/credentials
+cp /mnt/c/Users/<ユーザー名>/.aws/config ~/.aws/config
+```
+
+### 2. VS Code で WSL2 のフォルダを開く
+
+WSL2 のターミナルで以下を実行する。
+
+```sh
+code ~/repos/devcontainer
+```
+
+VS Code が WSL モード（左下に `WSL: Ubuntu` と表示）で開いたことを確認する。
+
+### 3. Dev Container を起動する
 
 1. `.env.example` をコピーして `.env` を作成する
 
@@ -105,7 +145,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
     COMPOSE_PROJECT_NAME=myproject
     ```
 
-3. VS Code でフォルダを開き、コマンドパレットから `Dev Containers: Reopen in Container` を実行する
+3. コマンドパレット（`Ctrl+Shift+P`）から `Dev Containers: Reopen in Container` を実行する
 
 ## Linux 環境での起動手順
 
