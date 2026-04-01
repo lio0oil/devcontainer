@@ -7,3 +7,7 @@ amazonwebservices.aws-toolkit-vscode
 Boto3typed.boto3-ide
 mhutchie.git-graph
 eamodio.gitlens
+shd101wyy.markdown-preview-enhanced
+yzhang.markdown-all-in-one
+bierner.markdown-mermaid
+DavidAnson.vscode-markdownlint
