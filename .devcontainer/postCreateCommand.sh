@@ -7,7 +7,10 @@ cd $CURRENT
 sudo apt-get update && sudo apt-get upgrade -y
 
 # apt packages
-sudo apt-get install -y pulseaudio-utils alsa-utils libasound2-plugins
+sudo apt-get install -y pulseaudio-utils alsa-utils libasound2-plugins sox
+
+# ALSA → PulseAudio routing
+sudo cp ./.files/asound.conf /etc/asound.conf
 
 # zsh
 sh ./.dotconfig/.scripts/zsh.sh
