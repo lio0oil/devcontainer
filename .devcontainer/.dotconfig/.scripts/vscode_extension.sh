@@ -4,7 +4,7 @@ DIR=`dirname $0`
 CONFIG="${DIR}/vscode_extension.txt"
 
 # VS Code remote-cli の code コマンドをスタブより優先させる
-CODE_PATH=$(find /vscode/vscode-server -name "code" -path "*/remote-cli/code" 2>/dev/null | head -1)
+CODE_PATH=$(find /vscode/vscode-server /home/vscode/.vscode-server -name "code" -path "*/remote-cli/code" 2>/dev/null | head -1)
 if [ -n "$CODE_PATH" ]; then
     export PATH="$(dirname $CODE_PATH):$PATH"
 fi
@@ -21,14 +21,24 @@ if [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
     done
 fi
 
+if [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
+    echo "VS Code is not attached, skipping extension installation."
+    exit 0
+fi
+
 MARKER="$HOME/.vscode_extensions_installed"
 if [ -f "$MARKER" ]; then
     echo "VS Code extensions already installed, skipping."
     exit 0
 fi
 
+FAILED=0
 for l in `cat ${CONFIG}`;do
-    code --install-extension ${l}
+    code --install-extension ${l} || FAILED=1
 done
 
-touch "$MARKER"
+if [ $FAILED -eq 0 ]; then
+    touch "$MARKER"
+else
+    echo "Some extensions failed to install. Marker file not created."
+fi

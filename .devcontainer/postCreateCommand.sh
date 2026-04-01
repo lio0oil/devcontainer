@@ -39,7 +39,7 @@ sh ./.dotconfig/.scripts/go.sh
 sh ./.dotconfig/.scripts/rust.sh
 
 # ai cli (claude code, gemini cli, kiro cli)
-sh ./.dotconfig/.scripts/ai_cli.sh
+bash ./.dotconfig/.scripts/ai_cli.sh
 
 # docker socket
 sh ./.dotconfig/.scripts/docker.sh
