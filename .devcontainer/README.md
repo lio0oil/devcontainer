@@ -115,45 +115,9 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 - [VS Code](https://code.visualstudio.com/)
   - [Dev Containers 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-## WSL2 の初期セットアップ（初回のみ）
+## 起動手順
 
-WSL2 をインストールした直後はデフォルトユーザーが未設定で root として起動する。
-一般ユーザーを作成してデフォルトに設定する。
-
-### 1. 一般ユーザーを作成する
-
-WSL2 のターミナル（root）で実行する。
-
-```sh
-# ユーザーを作成（名前は任意）
-useradd -m -s /bin/bash <ユーザー名>
-passwd <ユーザー名>
-
-# sudo を使えるようにする
-usermod -aG sudo <ユーザー名>
-```
-
-### 2. デフォルトユーザーを設定する
-
-```sh
-cat << 'EOF' > /etc/wsl.conf
-[user]
-default=<ユーザー名>
-EOF
-```
-
-### 3. WSL2 を再起動する
-
-Windows の PowerShell で実行する。
-
-```powershell
-wsl --shutdown
-wsl
-```
-
-再起動後、`whoami` で作成したユーザー名が表示されれば完了。
-
-## devcontainer での起動手順
+Windows の VS Code から Dev Container を使うことを想定。
 
 ### 1. `.env` を作成する
 
@@ -172,14 +136,6 @@ COMPOSE_PROJECT_NAME=myproject
 VS Code でプロジェクトフォルダを開き、コマンドパレット（`Ctrl+Shift+P`）から `Dev Containers: Reopen in Container` を実行する。
 
 `postCreateCommand`（環境構築）と `postAttachCommand`（VS Code 拡張機能インストール）が自動で実行される。
-
-## Linux 環境での起動手順
-
-リポジトリをクローンし、以下を実行する。
-
-```sh
-sh .devcontainer/postCreateCommand.sh
-```
 
 ## カスタマイズ
 
@@ -229,15 +185,30 @@ INSTALL_KIRO_CLI=true
 cp .devcontainer/docker-compose.override.yml.example .devcontainer/docker-compose.override.yml
 ```
 
-### WSLg 音声のセットアップ（WSL / WSL2 のみ）
+### WSLg 音声のセットアップ（オプション）
 
-#### Dev Container で使う場合（Windows からコンテナを起動）
+マイクの音声はWSLg経由でWSL2のPulseAudioに渡り、コンテナはTCP経由でそれに接続する。
+
+```mermaid
+graph LR
+    Mic["マイク"]
+    Win["Windows\nオーディオ"]
+    WSLg["WSLg"]
+    Pulse["WSL2 Ubuntu\nPulseAudio\n:4713"]
+    Container["devcontainer\nClaude Code"]
+
+    Mic --> Win
+    Win --> WSLg
+    WSLg --> Pulse
+    Pulse -->|"host.docker.internal:4713"| Container
+```
 
 コンテナは `host.docker.internal:4713` 経由で WSL2 の PulseAudio に TCP 接続する。
 
 1. WSL2 側で PulseAudio TCP を有効化する（初回のみ）
 
-    Claude Code をインストールした WSL2 ディストリビューション上で実行する。
+    PulseAudio が動作している WSL2 ディストリビューション（Ubuntu など普段使いのもの）上で実行する。
+    使用するディストリビューション名は `wsl --list` で確認できる。
 
     ```sh
     sh .devcontainer/setup-wsl-pulse-tcp.sh
@@ -257,19 +228,30 @@ cp .devcontainer/docker-compose.override.yml.example .devcontainer/docker-compos
 
 4. コンテナをリビルドする
 
-#### WSL2 上で直接使う場合
+### VS Code 拡張機能の追加・変更
 
-WSLg はすでに PulseAudio を提供しているため TCP 設定は不要。ALSA が PulseAudio を使うよう設定する。
+`.devcontainer/.dotconfig/.scripts/vscode_extension.txt` に拡張機能の ID を追記する。
 
-Claude Code をインストールした WSL2 ディストリビューション上で実行する。
+---
+
+## その他の環境での起動手順
+
+Dev Container を使わない特殊な環境向けの手順。通常は不要。
+
+### Linux 環境 / WSL2 上で直接使う場合
+
+リポジトリをクローンし、以下を実行する。
+
+```sh
+sh .devcontainer/postCreateCommand.sh
+```
+
+WSLg 音声を使う場合は、ALSA が PulseAudio を使うよう設定する。
 
 ```sh
 sh .devcontainer/setup-wsl-alsa.sh
 ```
-
-### VS Code 拡張機能の追加・変更
-
-`.devcontainer/.dotconfig/.scripts/vscode_extension.txt` に拡張機能の ID を追記する。
+---
 
 ## 注意事項
 
