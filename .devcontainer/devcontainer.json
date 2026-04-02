@@ -7,10 +7,10 @@
   "workspaceFolder": "/home/vscode/workspace",
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "/bin/sh /home/vscode/workspace/.devcontainer/postCreateCommand.sh",
+  "postCreateCommand": "/bin/sh /home/vscode/host/.devcontainer/postCreateCommand.sh",
 
   // Install VS Code extensions on attach
-  "postAttachCommand": "/bin/sh /home/vscode/workspace/.devcontainer/.dotconfig/.scripts/vscode_extension.sh",
+  "postAttachCommand": "/bin/sh /home/vscode/host/.devcontainer/.dotconfig/.scripts/vscode_extension.sh",
 
   // Configure tool-specific properties.
   "customizations": {

@@ -75,11 +75,33 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 
 ### マウント
 
-| ホスト | コンテナ | 用途 |
+| ホスト | コンテナ内パス | 用途 |
 | --- | --- | --- |
-| リポジトリルート | `/home/vscode/workspace` | ワークスペース |
-| `~/.aws` | `/home/vscode/.aws` | AWS 認証情報 |
+| 名前付きボリューム `workspace` | `/home/vscode/workspace` | VS Code のワークスペース。ここで開発作業を行う。コンテナを削除・リビルドしてもデータが保持される |
+| リポジトリルート | `/home/vscode/host` | このリポジトリ自体をマウント。`.devcontainer/` 以下のスクリプトはここ経由で実行される |
+| `~/.aws` | `/home/vscode/.aws` | ホストの AWS 認証情報を共有（`~/.aws/credentials` など） |
 | `/var/run/docker.sock` | `/var/run/docker.sock` | Docker ソケット（Docker in Docker） |
+
+> **名前付きボリュームへの Windows からのアクセス**
+> エクスプローラーで `\\wsl.localhost\rancher-desktop-data\docker\volumes\` を開くと名前付きボリュームの実体にアクセスできる。
+> ボリューム名は `<COMPOSE_PROJECT_NAME>_workspace` となる（例: `myproject_workspace`）。
+>
+> **注意事項:**
+> - Rancher Desktop が起動していないとこのパスにアクセスできない
+> - エクスプローラーから直接ファイルを編集・削除するとデータが壊れる可能性があるため、参照・バックアップ用途にとどめること
+
+### コンテナ内のディレクトリ構成
+
+```
+/home/vscode/
+├── workspace/   ← 開発作業用ディレクトリ（VS Code がここを開く）
+├── host/        ← このリポジトリのルート（リードオンリーではない）
+│   └── .devcontainer/
+│       ├── devcontainer.json
+│       ├── docker-compose.yml
+│       └── postCreateCommand.sh  ← コンテナ作成時に実行される初期化スクリプト
+└── .aws/        ← AWS 認証情報（ホストと共有）
+```
 
 #### WSLg 音声を使う場合（オプション）
 
@@ -87,23 +109,11 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 
 ## 前提条件
 
-- [Rancher Desktop](https://rancherdesktop.io/)（または [Docker Desktop](https://www.docker.com/products/docker-desktop/)）
+- [Rancher Desktop](https://rancherdesktop.io/)
   - Container Engine: `dockerd (moby)` を選択する
   - WSL Integration: 使用する WSL2 ディストリビューションを有効にする
 - [VS Code](https://code.visualstudio.com/)
-  - [WSL 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
   - [Dev Containers 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-- devcontainer CLI（WSL2 内にインストール）
-
-    ```sh
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    npm install -g @devcontainers/cli
-    ```
-
-> **Rancher Desktop を使う場合の注意:**
-> VS Code の Dev Containers 拡張機能はコンテナ作成時に WSL2 のパスを Windows 形式に変換してしまうため、Rancher Desktop では bind mount が正常に動作しない。
-> そのため、`devcontainer` CLI で先にコンテナを起動してから VS Code でアタッチする手順を取る（Docker Desktop では不要）。
 
 ## WSL2 の初期セットアップ（初回のみ）
 
@@ -142,73 +152,26 @@ wsl
 ```
 
 再起動後、`whoami` で作成したユーザー名が表示されれば完了。
-以降はプロジェクトを `~/repos/` 以下に配置する（実体: `/home/<ユーザー名>/repos/`）。
 
 ## devcontainer での起動手順
 
-**WSL2 のファイルシステム上にプロジェクトを置いて起動することを推奨する。**
-Windows のファイルシステム（`C:\`）上に置くと、コンテナからのファイル I/O が遅くなる。
-WSL2 上に置くことでパフォーマンスが向上し、WSLg の音声ソケットも直接マウントできる。
-
-参考: [Open a WSL 2 folder in a container on Windows](https://code.visualstudio.com/docs/devcontainers/containers#_open-a-wsl-2-folder-in-a-container-on-windows) / [Improve disk performance](https://code.visualstudio.com/remote/advancedcontainers/improve-performance)
-
-### 1. WSL2 にリポジトリを用意する
-
-WSL2 のターミナル（Ubuntu など）を開き、リポジトリを Linux ファイルシステム上に置く。
+### 1. `.env` を作成する
 
 ```sh
-mkdir -p ~/repos
-git clone <リポジトリURL> ~/repos/devcontainer
-# または Windows 側からコピーする場合:
-# cp -r /mnt/c/Users/<ユーザー名>/source/repos/devcontainer ~/repos/devcontainer
+cp .devcontainer/.env.example .devcontainer/.env
 ```
 
-AWS 認証情報も WSL2 側にコピーする。
+`.env` の `COMPOSE_PROJECT_NAME` をプロジェクト名に変更する。
 
 ```sh
-mkdir -p ~/.aws
-cp /mnt/c/Users/<ユーザー名>/.aws/credentials ~/.aws/credentials
-cp /mnt/c/Users/<ユーザー名>/.aws/config ~/.aws/config
+COMPOSE_PROJECT_NAME=myproject
 ```
 
-### 2. VS Code で WSL2 のフォルダを開く
+### 2. Dev Container を起動する
 
-WSL2 のターミナルで以下を実行する。
+VS Code でプロジェクトフォルダを開き、コマンドパレット（`Ctrl+Shift+P`）から `Dev Containers: Reopen in Container` を実行する。
 
-```sh
-code ~/repos/devcontainer
-```
-
-VS Code が WSL モード（左下に `WSL: Ubuntu` と表示）で開いたことを確認する。
-
-### 3. Dev Container を起動する
-
-1. `.env.example` をコピーして `.env` を作成する
-
-    ```sh
-    cp .devcontainer/.env.example .devcontainer/.env
-    ```
-
-2. `.env` の `COMPOSE_PROJECT_NAME` をプロジェクト名に変更する
-
-    ```sh
-    COMPOSE_PROJECT_NAME=myproject
-    ```
-
-3. WSL2 のターミナルで `devcontainer up` を実行する
-
-    ```sh
-    devcontainer up --workspace-folder .
-    ```
-
-    このコマンドがコンテナの作成・起動と `postCreateCommand`（環境構築）を実行する。
-
-4. VS Code のコマンドパレット（`Ctrl+Shift+P`）から `Dev Containers: Reopen in Container` を実行する
-
-    既存のコンテナを再利用してアタッチし、`postAttachCommand`（VS Code 拡張機能インストール）が実行される。
-
-> **Docker Desktop を使う場合:**
-> 手順 3 は不要。手順 4 のみで起動できる。
+`postCreateCommand`（環境構築）と `postAttachCommand`（VS Code 拡張機能インストール）が自動で実行される。
 
 ## Linux 環境での起動手順
 
@@ -268,23 +231,31 @@ cp .devcontainer/docker-compose.override.yml.example .devcontainer/docker-compos
 
 ### WSLg 音声のセットアップ（WSL / WSL2 のみ）
 
-#### Dev Container で使う場合
+#### Dev Container で使う場合（Windows からコンテナを起動）
 
-WSL2 ファイルシステム上でプロジェクトを開いている場合、WSLg の PulseAudio ソケットをコンテナに直接マウントできる。TCP 設定は不要。
+コンテナは `host.docker.internal:4713` 経由で WSL2 の PulseAudio に TCP 接続する。
 
-1. `docker-compose.wslg.yml.example` をコピーする
+1. WSL2 側で PulseAudio TCP を有効化する（初回のみ）
+
+    Claude Code をインストールした WSL2 ディストリビューション上で実行する。
+
+    ```sh
+    sh .devcontainer/setup-wsl-pulse-tcp.sh
+    ```
+
+2. `docker-compose.wslg.yml.example` をコピーする
 
     ```sh
     cp .devcontainer/docker-compose.wslg.yml.example .devcontainer/docker-compose.wslg.yml
     ```
 
-2. `devcontainer.json` の `dockerComposeFile` に追加する
+3. `devcontainer.json` の `dockerComposeFile` に追加する
 
     ```jsonc
     "dockerComposeFile": ["docker-compose.yml", "docker-compose.wslg.yml"]
     ```
 
-3. コンテナをリビルドする
+4. コンテナをリビルドする
 
 #### WSL2 上で直接使う場合
 

@@ -3,13 +3,16 @@
 CURRENT=$(cd $(dirname $0) && pwd)
 cd $CURRENT
 
+# workspace ownership (named volume is created as root by Docker)
+sudo chown vscode:vscode /home/vscode/workspace
+
 # os update
 sudo apt-get update && sudo apt-get upgrade -y
 
 # apt packages
 sudo apt-get install -y pulseaudio-utils alsa-utils libasound2-plugins sox
 
-# ALSA → PulseAudio routing
+# ALSA -> PulseAudio routing
 sudo cp ./.files/asound.conf /etc/asound.conf
 
 # zsh

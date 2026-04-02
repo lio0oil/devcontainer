@@ -2,7 +2,17 @@ services:
   devcontainer:
     image: mcr.microsoft.com/devcontainers/base:ubuntu
     volumes:
-      - ..:/home/vscode/workspace
+      # 名前付きボリューム: VS Code のワークスペース（/home/vscode/workspace）
+      # コンテナを削除・リビルドしてもデータが保持される
+      - workspace:/home/vscode/workspace
+      # リポジトリルートをコンテナ内の /home/vscode/host にマウント
+      # .devcontainer/ 以下のスクリプトはここ経由でアクセスされる
+      - ..:/home/vscode/host
+      # ホストの AWS 認証情報をコンテナ内で共有（~/.aws/credentials など）
       - ~/.aws:/home/vscode/.aws
+      # Docker ソケットをマウントして Docker in Docker を実現
       - /var/run/docker.sock:/var/run/docker.sock
     command: sleep infinity
+
+volumes:
+  workspace:
