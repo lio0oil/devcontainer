@@ -56,7 +56,7 @@ devcontainer および Linux 環境の初期構成を行うセットアップス
 | ツール | インストール方法 | デフォルト |
 | --- | --- | --- |
 | Claude Code | curl インストーラー | 有効 |
-| Gemini CLI | npm | 有効 |
+| Antigravity CLI | curl インストーラー | 有効 |
 | Kiro CLI | curl インストーラー | 有効 |
 
 ### VS Code 拡張機能
@@ -173,7 +173,7 @@ INSTALL_RUST_VERSION=""     # 空で stable / 例: "1.85.0"
 ```sh
 # AI CLI
 INSTALL_CLAUDE_CODE=true
-INSTALL_GEMINI_CLI=true
+INSTALL_ANTIGRAVITY_CLI=true
 INSTALL_KIRO_CLI=true
 ```
 

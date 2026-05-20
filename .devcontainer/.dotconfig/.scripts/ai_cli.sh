@@ -20,24 +20,22 @@ else
     echo "Skip Claude Code installation."
 fi
 
-# Gemini CLI
-if [ "$INSTALL_GEMINI_CLI" = "true" ]; then
-    export VOLTA_HOME="$HOME/.volta"
-    export PATH="$VOLTA_HOME/bin:$PATH"
-    npm install -g @google/gemini-cli
-    # ~/.gemini/settings.json に mcpServers をマージ
-    mkdir -p "$HOME/.gemini"
-    GEMINI_SETTINGS="$HOME/.gemini/settings.json"
-    # Gemini CLI は disabled / autoApprove キーに非対応のため除去し、disabled:true のエントリは除外する
-    GEMINI_MCP=$(jq '{mcpServers: (.mcpServers | to_entries | map(select(.value.disabled != true)) | map(.value |= del(.disabled, .autoApprove)) | from_entries)}' "$MCP_SOURCE")
-    if [ -f "$GEMINI_SETTINGS" ]; then
-        jq -s '.[0] * .[1]' "$GEMINI_SETTINGS" <(echo "$GEMINI_MCP") > /tmp/gemini_settings.json
-        mv /tmp/gemini_settings.json "$GEMINI_SETTINGS"
+# Antigravity CLI
+if [ "$INSTALL_ANTIGRAVITY_CLI" = "true" ]; then
+    curl -fsSL https://antigravity.google/cli/install.sh | bash
+    # ~/.gemini/antigravity-cli/mcp_config.json に mcpServers をマージ
+    mkdir -p "$HOME/.gemini/antigravity-cli"
+    AGY_SETTINGS="$HOME/.gemini/antigravity-cli/mcp_config.json"
+    # Antigravity CLI は disabled / autoApprove キーに非対応のため除去し、disabled:true のエントリは除外する
+    AGY_MCP=$(jq '{mcpServers: (.mcpServers | to_entries | map(select(.value.disabled != true)) | map(.value |= del(.disabled, .autoApprove)) | from_entries)}' "$MCP_SOURCE")
+    if [ -f "$AGY_SETTINGS" ]; then
+        jq -s '.[0] * .[1]' "$AGY_SETTINGS" <(echo "$AGY_MCP") > /tmp/agy_settings.json
+        mv /tmp/agy_settings.json "$AGY_SETTINGS"
     else
-        echo "$GEMINI_MCP" > "$GEMINI_SETTINGS"
+        echo "$AGY_MCP" > "$AGY_SETTINGS"
     fi
 else
-    echo "Skip Gemini CLI installation."
+    echo "Skip Antigravity CLI installation."
 fi
 
 # Kiro CLI
